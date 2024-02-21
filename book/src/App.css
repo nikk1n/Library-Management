@@ -1,0 +1,80 @@
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+h1 {
+  text-align: center;
+}
+
+form {
+  margin-bottom: 20px;
+}
+
+.search {
+  margin-top: 10px;
+}
+
+input[type="text"],
+input[type="number"] {
+  width: calc(100% - 100px);
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  border-radius: 15px;
+  margin-right: 5px;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  display: flex; /* Use flexbox */
+  flex-wrap: wrap; /* Wrap items if they exceed the width of the container */
+  justify-content: space-between; /* Distribute items evenly along the main axis */
+}
+
+li {
+  width: calc(33.33% - 20px); /* Three items per row with a small gap between them */
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  margin-bottom: 20px;
+  padding: 10px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+li div {
+  margin-bottom: 5px;
+}
+
+li button {
+  background-color: #dc3545;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+li button:hover {
+  background-color: #c82333;
+}
+.ud-buttons{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 10px;
+}
