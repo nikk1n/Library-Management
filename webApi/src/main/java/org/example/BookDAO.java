@@ -1,20 +1,29 @@
 package org.example;
 
+import com.zaxxer.hikari.HikariDataSource;
+
+import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-
 public class BookDAO {
-    private static final String URL = "jdbc:postgresql://localhost:5432/postgres";
-    private static final String USER = "postgres";
-    private static final String PASSWORD = "ybrbnjc-.-.";
+    private static final String URL=PropertyLoader.getProperty("database.url");
+    private static final String USER=PropertyLoader.getProperty("database.username");
+    private static final String PASSWORD=PropertyLoader.getProperty("database.password");
+
+    DataSource dataSource=createDataSource();
+    private static DataSource createDataSource() {
+        HikariDataSource ds = new HikariDataSource();
+        ds.setJdbcUrl(URL);
+        ds.setUsername(USER);
+        ds.setPassword(PASSWORD);
+        return ds;
+    }
 
     public void addBook(Book book) {
         System.out.println(book);
-        // ConnectionPool у которого есть n-ное количество соединений, которые будут переиспользоваться
-        // пул соединений
        String query = "INSERT INTO books (title, author, publishyear, imageurl, genre) VALUES (?, ?, ?, ?, ?)";
-         try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
+         try (Connection connection = dataSource.getConnection();
               PreparedStatement preparedStatement = connection.prepareStatement(query)) {
               System.out.println("Connected to database");
               preparedStatement.setString(1, book.getTitle());
@@ -30,7 +39,7 @@ public class BookDAO {
     }
     public void updateBook(int id, Book book) {
         String query = "UPDATE books SET title = ?, author = ?, publishyear = ?, imageurl = ?, genre = ? WHERE id = ?";
-        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
+        try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, book.getTitle());
             preparedStatement.setString(2, book.getAuthor());
@@ -45,7 +54,7 @@ public class BookDAO {
     }
     public void deleteBook(int id) {
         String query = "DELETE FROM books WHERE id = ?";
-        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
+        try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();
@@ -57,7 +66,7 @@ public class BookDAO {
         String query = "SELECT * FROM books WHERE id = ?";
 
         Book book = null;
-        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
+        try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setInt(1, id);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -79,7 +88,7 @@ public class BookDAO {
     public List<Book> getAllBooks() {
         var books = new ArrayList<Book>();
         String query = "SELECT * FROM books";
-        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
+        try (Connection connection = dataSource.getConnection();
              Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(query)) {
             while (resultSet.next()) {

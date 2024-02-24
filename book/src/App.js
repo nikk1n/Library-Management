@@ -48,6 +48,7 @@ function BookCRUD() {
         (book) =>
             book.Title.toLowerCase().includes(query.toLowerCase()) ||
             book.Author.toLowerCase().includes(query.toLowerCase()) ||
+            book.Genre.toLowerCase().includes(query.toLowerCase()) ||
             book.PublishYear.toString().toLowerCase().includes(query.toLowerCase())
     )
     setSearchResults(results);
@@ -141,7 +142,7 @@ function BookCRUD() {
               type="text"
               name="Search"
               value={searchTerm}
-              placeholder="Search by Title, Auhtor, Year"
+              placeholder="Search by Title, Author, Genre, Year"
               onChange={handleChange}/>
         </form>
         {searchTerm ? (
