@@ -11,7 +11,7 @@ public class PropertyLoader {
         try (InputStream input = new FileInputStream("App.properties")) {
             properties.load(input);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("An error occurred while loading properties: " +e.getMessage());
         }
     }
 

@@ -1,5 +1,4 @@
 package org.example;
-
 public class Book {
     private int Id;
     private String Title;
@@ -11,6 +10,14 @@ public class Book {
     private String Genre;
 
     public Book() {
+    }
+
+    public Book(String title, String author, int publishYear, String imageUrl, String genre) {
+        Title = title;
+        Author = author;
+        PublishYear = publishYear;
+        ImageUrl = imageUrl;
+        Genre = genre;
     }
 
     public String getGenre() {

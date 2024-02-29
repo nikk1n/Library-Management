@@ -21,7 +21,7 @@ public class Main {
             System.out.println("Server started on port "+serverPort);
             server.join();
         } catch (Exception e) {
-            System.out.println("An error occurred while starting the server: " + e.getMessage());
+            throw new RuntimeException("Error occurred while starting the server: "+e.getMessage());
         }
     }
 }
